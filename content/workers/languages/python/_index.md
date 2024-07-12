@@ -18,7 +18,7 @@ Cloudflare Workers provides first-class support for Python, including support fo
 - [Built-in packages](/workers/languages/python/packages), including [FastAPI](https://fastapi.tiangolo.com/), [Langchain](https://pypi.org/project/langchain/), [httpx](https://www.python-httpx.org/) and more.
 
 {{<Aside type="note" header="Python Workers are in open beta.">}}
-You can currently only use the [built-in packages](/workers/languages/python/packages) in local development. Support for deploying packages with a `requirements.txt` file is coming soon.
+Currently, you can only deploy Python Workers that use the standard library. [Packages](/workers/languages/python/packages/#supported-packages) **cannot be deployed** and will only work in local development for the time being.
 
 You must add the `python_workers` compatibility flag to your Worker, while Python Workers are in open beta.
 
