@@ -20,10 +20,10 @@ Your runtime APIs are dynamic - their exact configuration depends on:
 Until now, there was always the potential that the types defined in `@cloudflare/workers-types` might not exactly match your project's runtime APIs. As of `wrangler 3.66.1` there is now [an experimental command](/workers/wrangler/commands/#types) to dynamically generate the correct types for your project:
 
 ```bash
-npx wrangler types --experimental-include-runtime
+wrangler types --experimental-include-runtime
 
 # You could also use the alias
-npx wrangler types --x-include-runtime
+wrangler types --x-include-runtime
 ```
 
 This will generate a `d.ts` file and (by default) save it to `.wrangler/types/runtime.d.ts`. You will be prompted in the command's output to add that file to your `tsconfig.json`'s `compilerOptions.types` array.
@@ -31,7 +31,7 @@ This will generate a `d.ts` file and (by default) save it to `.wrangler/types/ru
 If you would like to commit the file to git, you can provide a custom path, e.g.:
 
 ```bash
-npx wrangler types --x-include-runtime="./types.d.ts"
+wrangler types --x-include-runtime="./types.d.ts"
 ```
 
 Note that the `--x-include-runtime` command replaces the need for the `@cloudflare/workers-types` package, so that should be uninstalled to avoid any potential for conflict.
