@@ -26,9 +26,9 @@ npx wrangler types --experimental-include-runtime
 npx wrangler types --x-include-runtime
 ```
 
-This will generate a `runtime.d.ts` file and (by default) save it to `.wrangler/types/runtime.d.ts`. You will be prompted in the command's output to add that file to your `tsconfig.json`'s `compilerOptions.types` array.
+This will generate a `d.ts` file and (by default) save it to `.wrangler/types/runtime.d.ts`. You will be prompted in the command's output to add that file to your `tsconfig.json`'s `compilerOptions.types` array.
 
-If you want to commit the file to git, you can provide a custom path, e.g.:
+If you would like to commit the file to git, you can provide a custom path, e.g.:
 
 ```bash
 npx wrangler types --x-include-runtime="./types.d.ts"
