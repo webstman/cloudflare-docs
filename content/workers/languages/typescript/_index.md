@@ -17,7 +17,7 @@ Your runtime APIs are dynamic - their exact configuration depends on:
 1. The `compatibility_date` defined in your `wrangler.toml`.
 2. Any `compatibility_flags` defined in your `wrangler.toml`.
 
-Until now, there was always the potential that the types defined in `@cloudflare/workers-types` might not exactly match your project's runtime APIs. As of `wrangler 3.66.1` there is now [an experimental command](https://developers.cloudflare.com/workers/wrangler/commands/#types) to dynamically generate the correct types for your project:
+Until now, there was always the potential that the types defined in `@cloudflare/workers-types` might not exactly match your project's runtime APIs. As of `wrangler 3.66.1` there is now [an experimental command](/workers/wrangler/commands/#types) to dynamically generate the correct types for your project:
 
 ```bash
 npx wrangler types --experimental-include-runtime
