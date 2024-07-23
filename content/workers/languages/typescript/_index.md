@@ -10,6 +10,32 @@ meta:
 
 TypeScript is a first-class language on Cloudflare Workers. Cloudflare publishes type definitions to [GitHub](https://github.com/cloudflare/workers-types) and [npm](https://www.npmjs.com/package/@cloudflare/workers-types) (`npm install -D @cloudflare/workers-types`). All APIs provided in Workers are fully typed, and type definitions are generated directly from [workerd](https://github.com/cloudflare/workerd), the open-source Workers runtime.
 
+### Dynamic Runtime Types (Experimental)
+
+Your runtime APIs are dynamic - their exact configuration depends on:
+
+1. The `compatibility_date` defined in your `wrangler.toml`.
+2. Any `compatibility_flags` defined in your `wrangler.toml`.
+
+Until now, there was always the potential that the types defined in `@cloudflare/workers-types` might not exactly match your project's runtime APIs. As of `wrangler 3.66.1` there is now an experimental command to dynamically generate the correct types for your project:
+
+```bash
+npx wrangler types --experimental-include-runtime
+
+# You could also use the alias
+npx wrangler types --x-include-runtime
+```
+
+This will generate a `runtime.d.ts` file and (by default) save it to `.wrangler/types/runtime.d.ts`. You will be prompted in the command's output to add that file to your `tsconfig.json`'s `compilerOptions.types` array.
+
+If you want to commit the file to git, you can provide a custom path, e.g.:
+
+```bash
+npx wrangler types --x-include-runtime="./types.d.ts"
+```
+
+Note that the `--x-include-runtime` command replaces the need for the `@cloudflare/workers-types` package, so that should be uninstalled to avoid any potential for conflict.
+
 ### Known issues
 
 #### Transitive loading of `@types/node` overrides `@cloudflare/workers-types`

@@ -329,9 +329,9 @@ wrangler d1 export <DATABASE_NAME> [OPTIONS]
 - `--table` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - The name of the table within a D1 database to export.
 - `--no-data` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - Controls whether export SQL file contains database data. Note that `--no-data=true` is not recommended due to a known wrangler limitation that intreprets the value as false.
+  - Controls whether export SQL file contains database data. Note that `--no-data=true` is not recommended due to a known Wrangler limitation that intreprets the value as false.
 - `--no-schema` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - Controls whether export SQL file contains database schema. Note that `--no-schema=true` is not recommended due to a known wrangler limitation that intreprets the value as false.
+  - Controls whether export SQL file contains database schema. Note that `--no-schema=true` is not recommended due to a known Wrangler limitation that intreprets the value as false.
 
 {{</definitions>}}
 
@@ -2322,7 +2322,7 @@ wrangler whoami
 
 The `--experimental-versions` flag is required to use the `wrangler versions` commands. You may use the shorthand `--x-versions` flag in place of `--experimental-versions` anywhere it is mentioned. For consistency in Wrangler's output, it is recommended that you use the `--experimental-versions` flag for all commands where it is an option.
 
-The minimum required wrangler version to use these commands is 3.40.0.
+The minimum required Wrangler version to use these commands is 3.40.0.
 
 {{</Aside>}}
 
@@ -2455,7 +2455,7 @@ This command is currently in closed beta. Report bugs in [GitHub](https://github
 
 The `--experimental-versions` flag is required to use the `wrangler triggers` commands. You may use the shorthand `--x-versions` flag in place of `--experimental-versions` anywhere it is mentioned. For consistency in Wrangler's output, it is recommended that you use the `--experimental-versions` flag for all commands where it is an option.
 
-The minimum required wrangler version to use these commands is 3.40.0.
+The minimum required Wrangler version to use these commands is 3.40.0.
 
 {{</Aside>}}
 
@@ -2532,7 +2532,7 @@ wrangler deployments list [OPTIONS]
 
 The `--experimental-versions` flag is required to use the new commands below. You may use the shorthand `--x-versions` flag in place of `--experimental-versions` anywhere it is mentioned. For consistency in Wrangler's output, it is recommended that you use the `--experimental-versions` flag for all commands where it is an option.
 
-The minimum required wrangler version to use these commands is 3.40.0.
+The minimum required Wrangler version to use these commands is 3.40.0.
 {{</Aside>}}
 
 ### `list --experimental-versions`
@@ -2816,6 +2816,20 @@ Generate types from bindings and module rules in configuration.
 wrangler types [<PATH>] [OPTIONS]
 ```
 
+{{<Aside type="warning">}}
+
+The `--experimental-include-runtime` flag dynamically generates runtime types according to the `compatibility_date` and `compatibility_flags` defined in your `wrangler.toml`.
+
+It is a replacement for the `@cloudflare/workers-types` package, so that package should be uninstalled to avoid any potential conflict.
+
+After running the command, you must add the path of the generated runtime types file to your `tsconfig` `compilerOptions.types` array.
+
+You may use the shorthand `--x-include-runtime` flag in place of `--experimental-include-runtime` anywhere it is mentioned.
+
+The minimum required Wrangler version to use this command is 3.66.1.
+
+{{</Aside>}}
+
 {{<definitions>}}
 
 - `PATH` {{<type>}}string{{</type>}} {{<prop-meta>}}(default: `worker-configuration.d.ts`){{</prop-meta>}}
@@ -2826,6 +2840,12 @@ wrangler types [<PATH>] [OPTIONS]
 - `--env-interface` {{<type>}}string{{</type>}} {{<prop-meta>}}(default: `Env`){{</prop-meta>}}
   - The name of the interface to generate for the environment object.
   - Not valid if the Worker uses the Service Worker syntax.
+
+- `--experimental-include-runtime` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}} {{<prop-meta>}}(default: `./.wrangler/types/runtime.d.ts`){{</prop-meta>}}
+  - The path of the generated runtime types file.
+  - Leave the path blank to use the default option, e.g. `npx wrangler types --x-include-runtime`
+  - A custom path must be relative to the project root.
+  - A custom path must have a `d.ts` extension.
 
 {{</definitions>}}
 
