@@ -4,9 +4,12 @@ pcx_content_type: reference-architecture
 weight: 1
 meta:
   title: "Reference Architecture: Architecture using Cloudflare SASE with Microsoft"
+products: [Gateway, Access, Browser Isolation, CASB, Data Loss Prevention, Cloudflare Tunnel]
+updated: 2024-06-02
 ---
 
 # Architecture using Cloudflare SASE with Microsoft
+{{<tutorial-date-info>}}
 
 ## Introduction
 In today's rapidly evolving digital landscape, organizations are increasingly embracing cloud migration to modernize their environments and enhance productivity. Microsoft has emerged as a leading provider of cloud applications and services, offering a comprehensive suite of solutions to support hybrid work. However, this shift to the cloud also presents new challenges and risks that must be addressed to ensure the security and integrity of an organization's resources.
@@ -47,11 +50,11 @@ Microsoft and Cloudflare can be integrated in the following ways.
 - Using Cloudflare's [Secure Web Gateway](/cloudflare-one/policies/gateway/) to control access to Microsoft SaaS applications such as Outline, OneDrive and Teams
 - Using Cloudflare's [Cloud Email Security](/email-security/) service to increase protection of email from phishing attacks and business email compromise.
 
-### Microsoft Entra ID with Cloudflare 
+### Microsoft Entra ID with Cloudflare
 
-Cloudflare's integration with Entra ID allows you to leverage your identities in Entra for authentication to any Cloudflare protected application. Groups can also be imported via SCIM to be used in access policies, simplifying management and abstracting access control by managing group membership in Entra ID. 
+Cloudflare's integration with Entra ID allows you to leverage your identities in Entra for authentication to any Cloudflare protected application. Groups can also be imported via SCIM to be used in access policies, simplifying management and abstracting access control by managing group membership in Entra ID.
 
-- Entra ID enables administrators to create and enforce policies on both applications and users using Conditional Access policies. 
+- Entra ID enables administrators to create and enforce policies on both applications and users using Conditional Access policies.
 - It offers a wide range of parameters to control user access to applications, such as user risk level, sign-in risk level, device platform, location, client apps, and more.
 - Security teams can define their security controls in Entra ID and enforce them at the network layer, for every request, with Cloudflare's ZTNA service.
 
@@ -66,7 +69,7 @@ Cloudflare is able to enforce access policies that include information about dev
 
 ![Figure 2: Figure 2: Using Intune and Cloudflare device posture data for secure application access.](/images/reference-architecture/cloudflare-sase-with-microsoft/cloudflare-sase-with-microsoft-fig2.svg "Figure 2: Using Intune and Cloudflare device posture data for secure application access.")
 
-### Cloudflare CASB for Microsoft 365 
+### Cloudflare CASB for Microsoft 365
 
 As companies adopt numerous SaaS applications, maintaining consistent security, visibility, and performance becomes increasingly difficult. With each application having unique configurations and security requirements, IT teams face challenges in staying compliant and protecting sensitive data across the diverse landscape.
 

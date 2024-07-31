@@ -4,8 +4,11 @@ pcx_content_type: reference-architecture
 weight: 1
 meta:
     title: "Reference Architecture: Magic Transit"
+products: [Magic Transit]
+updated: 2024-02-05
 ---
 # Magic Transit Reference Architecture
+{{<tutorial-date-info>}}
 
 ## Introduction
 

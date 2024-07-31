@@ -4,9 +4,12 @@ pcx_content_type: design-guide
 weight:
 meta:
   title: "Design guide: Securely deliver applications with Cloudflare"
+products: [Access, DNS, Cloudflare Tunnel, API Shield, Bots, DDoS Protection, WAF, Spectrum, Turnstile, Page Shield, Rate limiting, Fraud Detection]
+updated: 2024-02-05
 ---
 
 # Securely deliver applications with Cloudflare
+{{<tutorial-date-info>}}
 
 ## Overview and the Cloudflare advantage
 

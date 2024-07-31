@@ -4,9 +4,12 @@ pcx_content_type: reference-architecture
 weight: 1
 meta:
     title: "Cloudflare Security Architecture"
+products: [Gateway, Access, Browser Isolation, CASB, Data Loss Prevention, Cloudflare Tunnel, Magic WAN, Cloud Email Security, Digital Experience Monitoring, Zero Trust WARP Client, API Shield, Bots, DDoS Protection, WAF, Spectrum, Turnstile, Page Shield, Rate limiting, Fraud Detection]
+updated: 2024-06-18
 ---
 
 # Cloudflare Security Architecture
+{{<tutorial-date-info>}}
 
 ## Introduction
 Today, everything and everyone needs to be connected to everything everywhere, all the time, and everything must be secure. However, many businesses are not built on infrastructure that supports this reality. Historically, employees worked in an office where most business systems (file servers, printers, applications) were located on and accessible only from the private office network. A security perimeter was created around the network to protect against outsider threats, most of which came from the public Internet.

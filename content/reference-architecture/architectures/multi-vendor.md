@@ -4,9 +4,12 @@ pcx_content_type: reference-architecture
 weight: 1
 meta:
     title: "Reference Architecture: Multi-vendor Application Security and Performance"
+products: [DNS, Cache / CDN, WAF, DDoS Protection, API Shield, Bots]
+updated: 2024-02-05
 ---
 
 # Multi-vendor Application Security and Performance
+{{<tutorial-date-info>}}
 
 ## Introduction
 

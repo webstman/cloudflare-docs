@@ -4,9 +4,12 @@ pcx_content_type: reference-architecture
 weight: 1
 meta:
     title: "Reference Architecture: Evolving to a SASE architecture with Cloudflare"
+products: [Gateway, Access, Browser Isolation, CASB, Data Loss Prevention, Cloudflare Tunnel, Magic WAN, Cloud Email Security, Digital Experience Monitoring, Zero Trust WARP Client]
+updated: 2024-02-06
 ---
 
 # Evolving to a SASE architecture with Cloudflare
+{{<tutorial-date-info>}}
 
 Download a [PDF version](/reference-architecture/static/cloudflare-evolving-to-a-sase-architecture.pdf) of this reference architecture.
 

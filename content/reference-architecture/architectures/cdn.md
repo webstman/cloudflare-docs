@@ -4,9 +4,12 @@ pcx_content_type: reference-architecture
 weight: 1
 meta:
     title: "Reference Architecture: Cloudflare Content Delivery Network (CDN)"
+products: [Cache / CDN]
+updated: 2024-06-13
 ---
 
 # Cloudflare CDN Reference Architecture
+{{<tutorial-date-info>}}
 
 ## Introduction
 

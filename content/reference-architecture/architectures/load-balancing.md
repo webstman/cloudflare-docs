@@ -4,9 +4,12 @@ pcx_content_type: reference-architecture
 weight: 1
 meta:
     title: "Reference Architecture: Cloudflare Load Balancing Reference Architecture"
+products: [Load Balancing]
+updated: 2024-02-06
 ---
 
 # Cloudflare Load Balancing Reference Architecture
+{{<tutorial-date-info>}}
 
 ## Introduction
 
