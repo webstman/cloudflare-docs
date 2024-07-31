@@ -19,11 +19,13 @@ The following limits apply to accounts, indexes and vectors (as specified):
 | Maximum dimensions per vector     | 1536 dimensions <sup>beta</sup>             |
 | Maximum vector ID length          | 64 bytes                                    |
 | Metadata per vector               | 10KiB <sup>beta</sup>                       |
-| Maximum returned results (`topK`) | 20   <sup>beta</sup>                        |
+| Maximum returned results (`topK`) with values or metadata| 20   <sup>beta</sup> |
+| Maximum returned results (`topK`) without values and metadata | 100   <sup>beta</sup> |
 | Maximum upsert batch size (per batch) | 1000 <sup>beta</sup> (Workers) / 5000 <sup>beta</sup> (HTTP API) |
-| Maximum index name length         | 63 bytes                                    |
-| Maximum vectors per index         | 200,000 <sup>beta</sup>                     |
+| Maximum index name length         | 64 bytes                                    |
+| Maximum vectors per index         | 5,000,000 <sup>beta</sup>                   |
 | Maximum namespaces per index      | 1000 namespaces  <sup>beta</sup>            |
-| Maximum namespace name length     | 63 bytes                                    |
+| Maximum namespace name length     | 64 bytes                                    |
+| Maximum vectors upload size       | 100  MB                                     |
 
 <sup>beta</sup> This limit is beta only and is expected to increase over time.
