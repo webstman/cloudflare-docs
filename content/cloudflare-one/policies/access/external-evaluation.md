@@ -149,7 +149,7 @@ To debug your External Evaluation rule:
 
 6. To decode the contents of a JWT, you can copy the token into [jwt.io](https://jwt.io/).
 
-   The incoming JWT should contain the user's identity data. The outgoing JWT should look similar to:
+   The incoming JWT should contain the user's identity data. The outgoing JWT will look similar to:
 
    ```js
    {
