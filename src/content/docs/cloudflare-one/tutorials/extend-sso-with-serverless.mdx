@@ -1,0 +1,165 @@
+---
+updated: 2024-08-13
+category: 🔐 Zero Trust
+difficulty: Advanced
+pcx_content_type: tutorial
+content_type: 📝 Tutorial
+title: Augment Clouflare Access SSO capabilities with Cloudflare Workers
+---
+
+## Introduction
+
+This tutorial will walk you through extending the single-sign-on (SSO) capabilities of Cloudflare Access with Serverless. Specifically, this guide will demonstrate how to modify requests sent to your secured origin to include additional information from the Cloudflare Access authentication event.
+
+Time to complete: **45 minutes**
+
+## Cloudflare Access authentication flow
+
+Cloudflare Access is an authentication proxy in charge of authenticating and authorization users for your exposed app before they reach it. When anthentication and authorization steps are successful, Cloudflare will insert a [JWT](https://developers.cloudflare.com/cloudflare-one/identity/authorization-cookie/application-token/) inside the request before it reaches the origin. That is the standard flow and that JWT can then be [verifed on the origin side](https://developers.cloudflare.com/cloudflare-one/identity/authorization-cookie/validating-json/#validate-jwts). 
+
+![extendedflow](~/assets/images/cloudflare-one/applications/access-standard-flow.png)
+
+Sometimes, it is necessary to modify the request or overload it with some extra information coming from that authentication event. Cloudflare Workers is a perfect fit for that task and we'll see in this tutorial how to make that happen.
+
+![standardflow](~/assets/images/cloudflare-one/applications/access-extended-flow-serverless.png)
+
+:::note
+
+This example shows how workers is running right after Access and is in charge of inserting new request headers: **risk_score** and **disk_encrypted**
+
+The [posture](https://developers.cloudflare.com/cloudflare-one/identity/devices/#enforce-device-posture) element serves as a prime example in this article, but the use and application of that concept extends far beyond that. You can indeed modify the request or overload it with anything Clouflare Access is collecting from the authentication event the user has passed before reaching the application.
+
+:::
+
+
+## Before you begin
+
+
+Make sure your have:
+
+* An active subscription for [Cloudflare Access](https://developers.cloudflare.com/cloudflare-one/policies/access/) (Zero-trust)
+* An active [Workers](https://developers.cloudflare.com/workers/#cloudflare-workers) plan
+* An active [self-hosted](https://developers.cloudflare.com/cloudflare-one/applications/configure-apps/self-hosted-apps/#add-a-self-hosted-application) application exposed with an active authentication and authorization policy
+* [Cloudflare Wrangler](https://developers.cloudflare.com/workers/wrangler/#wrangler) installed on your machine
+
+
+## Get started 
+
+
+1. Create a new Workers script 
+   
+```sh
+wrangler init 
+```
+
+2. Paste the script below in the `~/src/index.js` file
+
+:::note
+You can retrieve your Cloudflare Zero-Trust tenant name via Zero-trust > Setting > Custom Pages in the **Team Domain** section
+:::
+
+```javascript
+import { parse } from "cookie";
+export default {
+  async fetch(request, env, ctx) {
+    // The name of the cookie
+    const COOKIE_NAME = "CF_Authorization";
+	const CF_GET_IDENTITY = "https://<YOUR_ZEROTRUST_TENANT_NAME>.cloudflareaccess.com/cdn-cgi/access/get-identity";
+    const cookie = parse(request.headers.get("Cookie") || "");
+    if (cookie[COOKIE_NAME] != null) {
+      // Respond with the cookie value
+	  try {
+		let id = await (await fetch(CF_GET_IDENTITY, request)).json()
+		//log the upn
+		console.log(id.oidc_fields.principalName)
+		//log the whole id package (because we like to over debug)
+		console.log(id)
+		// if id present
+		if (id.oidc_fields.principalName) {
+			//clone request (immutable otherwise)
+			let newRequest = await new Request(request)
+			//insert id in request
+			newRequest.headers.set("Cf-Access-Authenticated-User-Principal-Name", id.oidc_fields.principalName)
+			//sent request to origin
+			return await fetch(newRequest)
+		}
+	  } catch (e) {
+		console.log(e)
+		return await fetch(request)
+	  }
+      return await fetch(request)
+    }
+    return await fetch(request)
+  },
+};
+```
+
+The script uses the [`get-identity`](https://developers.cloudflare.com/cloudflare-one/identity/authorization-cookie/application-token/#user-identity) endpoint to expand the authentication event using an authenticated method. Once fetched, you get to see the complete disposition of the authentication for the given authentication event, see an example below
+
+```json
+{
+  id: 'P51Tuu01fWHMBjIBvrCK1lK-eUDWs2aQMv03WDqT5oY',
+  name: 'XXXXXXXXX XXXXXXXXX',
+  email: 'xxxxxx@cloudflare.com',
+  amr: [ 'pwd' ],
+  oidc_fields: {
+    principalName: 'xxxxxxx_cloudflare.com#EXT#@xxxxxxxcloudflare.onmicrosoft.com'
+  },
+  groups: [
+    {
+      id: 'fdaedb59-e9be-4ab7-8001-3e069da54185',
+      name: 'XXXXXXXX'
+    },
+    { id: '617bc174-2c76-4a40-a138-9d6180fb12a5', name: 'XXXXXXX' },
+    {
+      id: '58e9b9cd-5d43-47e0-b7b1-dd3bbd1c1971',
+      name: 'XXXXXXXX'
+    },
+    {
+      id: 'a9f9a5d6-9812-409c-b9fd-88d2ba455bd6',
+      name: 'XXXXXXXX'
+    }
+  ],
+  idp: { id: 'b9f4d68e-dac1-48b0-b728-ae05a5f0d4b2', type: 'azureAD' },
+  geo: { country: 'XX' },
+  ...
+}
+```
+
+The script is inserting in particular the **oidc_fields.principalName** into a request header name **Cf-Access-Authenticated-User-Principal-Name**.
+
+:::note
+To view a list of [identity-based](https://developers.cloudflare.com/cloudflare-one/identity/authorization-cookie/application-token/#user-identity) data fields, log in to your Access application and append /cdn-cgi/access/get-identity to the URL. For example, if www.example.com is behind Access, visit https://www.example.com/cdn-cgi/access/get-identity.
+:::
+
+1. Map the script to a route matching your authenticated application by adding the following to the `wrangler.toml` file
+
+```toml
+route = { pattern= "app.example.com/*", zone_name="example.com"}
+```
+
+4. Deploy the script
+   
+```sh
+wrangler deploy 
+```
+
+5. Verify that the header is present for requests succeeding Cloudflare Access Authentication
+
+Below are the request headers as received by the origin
+
+```json
+{
+  "headers": {
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7", 
+    "Accept-Encoding": "gzip", 
+    "Accept-Language": "en-US,en;q=0.9,fr-FR;q=0.8,fr;q=0.7,en-GB;q=0.6", 
+    "Bot-Score": "99", 
+    "Cdn-Loop": "cloudflare; subreqs=1", 
+    "Cf-Access-Authenticated-User-Principal-Name": "xxxxxx_cloudflare.com#EXT#@xxxxxxcloudflare.onmicrosoft.com",  
+    "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36"
+  }
+}
+```
+
+Voila! 🎉
