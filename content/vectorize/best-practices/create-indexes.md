@@ -22,6 +22,12 @@ The configuration of an index cannot be changed after creation.
 
 {{<render file="_vectorize-wrangler-version.md">}}
 
+{{<Aside type="note" header="Using Vectorize v1?">}}
+
+Please use the 'wrangler vectorize --deprecated-v1' flag to create, get, list, delete and insert vectors into legacy Vectorize v1 indexes.
+
+{{</Aside>}}
+
 To create an index with `wrangler`:
 
 ```sh

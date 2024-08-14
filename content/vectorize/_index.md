@@ -65,7 +65,7 @@ Store large amounts of unstructured data without the costly egress bandwidth fee
 
 {{<resource-group>}}
 
-{{<resource header="Limits" href="/vectorize/platform/limits/" icon="documentation-clipboard">}}Learn about what limits Vectorize has during the open beta and how to work within them.{{</resource>}}
+{{<resource header="Limits" href="/vectorize/platform/limits/" icon="documentation-clipboard">}}Learn about what limits Vectorize has during the public beta and how to work within them.{{</resource>}}
 
 {{<resource header="Use cases" href="/use-cases/ai/" icon="documentation-clipboard">}}Learn how you can build and deploy ambitious AI applications to Cloudflare's global network.{{</resource>}}
 

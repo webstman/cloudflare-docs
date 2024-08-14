@@ -53,7 +53,7 @@ This will create a new `embeddings-tutorial` directory. Your new `embeddings-tut
 - A `"Hello World"` [Worker](/workers/get-started/guide/#3-write-code) at `src/index.ts`.
 - A [`wrangler.toml`](/workers/wrangler/configuration/) configuration file. `wrangler.toml` is how your `embeddings-tutorial` Worker will access your index.
 
-{{<Aside type="note" heading="Familiar with Workers?">}}
+{{<Aside type="note" header="Familiar with Workers?">}}
 
 If you are familiar with Cloudflare Workers, or initializing projects in a Continuous Integration (CI) environment, initialize a new project non-interactively by setting `CI=true` as an environmental variable when running `create cloudflare@latest`.
 
@@ -70,6 +70,12 @@ To create your first Vectorize index, change into the directory you just created
 ```sh
 $ cd embeddings-tutorial
 ```
+
+{{<Aside type="note" header="Using Vectorize v1?">}}
+
+Please use the 'wrangler vectorize --deprecated-v1' flag to create, get, list, delete and insert vectors into legacy Vectorize v1 indexes.
+
+{{</Aside>}}
 
 To create an index, use the `wrangler vectorize create` command and provide a name for the index. A good index name is:
 
